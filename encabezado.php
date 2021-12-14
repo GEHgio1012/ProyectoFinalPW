@@ -38,7 +38,7 @@
         </li>
 
         <li class="nav-item">
-          <a href="presentacion.php" class="nav-link">Materias</a>
+          <a href="Materias.php" class="nav-link">Materias</a>
         </li>
         <li class="nav-item">
           <a href="presentacion.php" class="nav-link">Acerca de</a>
