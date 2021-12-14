@@ -186,7 +186,7 @@
 </div>
 </div>
 
-
+<!--Comando para confirmar el borrado de un registro y posteriormente borrarlo-->
 <script>
     function preguntar(IdAlumnos){
         if(confirm('¿Estas seguro que quieres Eliminar este alumno?.')){

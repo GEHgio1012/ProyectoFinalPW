@@ -36,6 +36,13 @@
         }else{
         }
     }
+
+    if (isset($_GET['del'])) {
+        $idb=$_GET['del'];
+        $borrar="DELETE FROM Grupos where IdGrupos='$idb'";
+        $eliminar=$conn->query($borrar);
+        header('location:Grupos.php');
+    }
 ?>
 
 <section class='container mb-5 mt-5'>
@@ -70,7 +77,7 @@
                         <td>'.$filal["NombreGru"].'</td>
                         <td>'.$filal["PeriodoGrup"].'</td>
                         <td><button class="editbtn w3-blue w3-button w3-round" data-bs-toggle="modal" data-bs-target="#ModalEditar" title="Editar Elemento"><i class="far fa-edit"></i></button></td>
-                        <td><button onclick="preguntar('.$filal["IdAlumnos"].')" class="w3-red w3-button w3-round" title="Borrar Elemento"><i class="far fa-trash-alt"></i></button></td>
+                        <td><button onclick="preguntar('.$filal["IdGrupos"].')" class="w3-red w3-button w3-round" title="Borrar Elemento"><i class="far fa-trash-alt"></i></button></td>
                         </tr>
                         ';
                     }
@@ -159,8 +166,14 @@
 </script>
                     
 
-
-
+<!--Comando para confirmar el borrado de un registro y posteriormente borrarlo-->
+<script>
+    function preguntar(IdGrupos){
+        if(confirm('¿Estas seguro que quieres Eliminar este alumno?.')){
+            window.location.href='Grupos.php?del='+IdGrupos;
+        }
+    }
+</script>
 
 <?php
     include 'pie.php';
