@@ -1,0 +1,30 @@
+:root{
+    --color-dark: #1b1b1b;
+    --color-light: #ffffffff;
+    --color-gold: #c7b8a5;
+}
+
+body{
+    font-family:'Oswald', sans-serif;
+    font-weight: 200;
+    background-color: var(--color-dark);
+    color: var(--color-light);
+    letter-spacing: .05rem;
+    margin: 0rem;
+}
+
+.cover{
+    height: 600px;
+    background-image: url("cropped-1360-768-665092 (1).jpg");
+    background-position: center;
+    background-color: rgba(0,0,0,.5);
+    background-blend-mode: darken;
+}
+
+.gif1{
+    width: 300px;
+}
+
+.docente{
+    color: var(--color-gold);
+}
