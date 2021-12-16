@@ -90,7 +90,7 @@
             ?>
         </tbody>
     </table>
-</section>
+    </section>
 
 <div class="c modal" tabindex="-1" id='modalAltagrupo'>
     <style>
