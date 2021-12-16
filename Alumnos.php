@@ -93,7 +93,6 @@
                     
                     <?php
                     while ($filal=$re->fetch_array()) {
-                        include 'RAlumnos/BorrarAL.php';
                         echo '
                         <tr>
                         <td>'.$filal["IdAlumnos"].'</td>

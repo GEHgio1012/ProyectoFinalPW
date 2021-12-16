@@ -25,30 +25,7 @@
             }
         }
 
-        if (isset($_POST['addmagup'])) {
-            # code...
-            $magru3='SELECT * FROM Materias';
-            $conmg3=$conn->query($magru3);
-            while ($filag3=$conmg3->fetch_array()) {
-                if ($fila3['Id']) {
-                    # code...
-                }
-            }
-            
-            $coninsert="INSERT INTO MateriasGrupo(Nombre,Clave,Grado) VALUES('$nombreg','$clave','$grado') ";
-            $insert=$conn->query($coninsert);
-            if (!$insert) {
-                # code...
-                echo '
-                <div class="container">
-                <div class="w3-panel w3-pale-red w3-round w3-leftbar w3-rightbar w3-border-red">
-                <h2>ERROR FATAL!</h2>
-                <p>No puedes poner una matricula similar a otra materia</p>
-                </div> 
-                </div>
-                ';           
-            }
-        }
+        
 
 
         if (isset($_POST['edicion'])) {
@@ -131,43 +108,7 @@
 
     
 
-<section class='container mt-5 mb-5'>
-<h2>Grupos disponibles</h2>
 
-<?php
-
-    $gruposc='SELECT * FROM Grupos';
-    $congrup=$conn->query($gruposc);
-
-    $magru='SELECT * FROM MateriasGrupo';
-    $conmg=$conn->query($magru);
-    if ($congrup->num_rows >0) {
-        # code...
-        while (($filag=$congrup->fetch_array())||($filamg=$conmg->fetch_array())) {
-            echo '
-            <p class="d-grid gap-1 mb-4">
-                <button class="w3-button w3-round w3-border " type="button" data-bs-toggle="collapse" data-bs-target="#collapse'.$filag['IdGrupos'].'" aria-expanded="false" aria-controls="collapseExample">
-                    '.$filag['NombreGru'].' '.$filag['PeriodoGrup'].'
-                </button>
-            </p>
-            <div class="collapse mb-5" id="collapse'.$filag['IdGrupos'].'">
-               '; 
-                    if ($filamg['IdGrupo']==$filag['IdGrupos']) {
-                        # code...
-                    }else{
-                        echo'Aun no hay materias enlazadas a este grupo <br><br><br><button name="addmg" data-bs-toggle="modal" data-bs-target="#addmagu" class="w3-button w3-round w3-green">Agregar Materias</button>';
-                    }
-               
-            echo '</div>
-            ';
-        }
-    }else{
-        echo 'No hay Grupos registrados';
-    }
-
-    
-?>
-</section>
 <div class="card card-body">
                     Prueba de que si sirven los collapse
                 </div>
@@ -270,42 +211,7 @@
         }
     }
 </script>
-<!--Modal para agregar materias a un grupo-->
-<div class="modal fade" id="addmagu" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Materias Disponibles</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method='POST'>
-        <?php
-            $magru2='SELECT * FROM Materias';
-            $conmg2=$conn->query($magru2);
-            $grupos2='SELECT * FROM Grupos';
 
-            while ($filagm=$conmg2->fetch_array()) {
-                echo '
-                <div class="form-check">
-                    <input class="form-check-input" name="'.$filagm['IdMateria'].'" type="checkbox" value="'.$filagm['IdMateria'].'" id="defaultCheck'.$filagm['IdMateria'].'">
-                    <label class="form-check-label" for="defaultCheck'.$filagm['IdMateria'].'">
-                        '.$filagm['Nombre'].'
-                    </label>
-                </div>
-                ';
-            }
-        ?>
-        
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="w3-button w3-border w3-round" data-bs-dismiss="modal">Cancelar</button>
-        <input type="submit" name='addmagup' class="w3-button w3-blue w3-round" value='Añadir materia'>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
 
 <?php
     include 'pie.php';

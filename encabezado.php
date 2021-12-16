@@ -32,11 +32,13 @@
         <li class="nav-item">
           <a href="Alumnos.php" class="nav-link">Alumnos</a>
         </li>
-
         <li class="nav-item">
           <a href="Grupos.php" class="nav-link">Grupos</a>
         </li>
-
+        <li class="nav-item">
+          <a href="Profesores.php" class="nav-link">Profesores</a>
+        </li>
+        
         <li class="nav-item">
           <a href="Materias.php" class="nav-link">Materias</a>
         </li>
@@ -44,6 +46,15 @@
           <a href="presentacion.php" class="nav-link">Acerca de</a>
         </li>
 <!--
+        <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Grupos 
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" href="Grupos.php">Lista de Grupos</a></li>
+            <li><a class="dropdown-item" href="Materiasgrupo.php">Materias de grupos</a></li>
+          </ul>
+        </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Alumnos 
