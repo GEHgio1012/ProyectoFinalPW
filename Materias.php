@@ -53,6 +53,29 @@
             $eliminar=$conn->query($borrar);
             header('location:Materias.php');
         }
+
+        //Seccion  para administrar las clases
+
+        if (isset($_POST['addclase'])) {
+            # code...
+            $matrimg=$_POST['idmg'];
+            $materiamg=$_POST['materiap'];
+            $docentemg=$_POST['docente'];
+            $grupomg=$_POST['grupo1'];
+            $insertmg="INSERT INTO MateriasGrupo(IdProfe,IdMaterias,IdGrupo,MatriClas) VALUES('$docentemg','$materiamg','$grupomg','$matrimg')";
+            $entrymg=$conn->query($insertmg);
+            if (!$entrymg) {
+                # code...
+                echo '
+            <div class="container">
+                <div class="w3-panel w3-pale-red w3-round w3-leftbar w3-rightbar w3-border-red">
+                <h2>ERROR FATAL!</h2>
+                <p>Hubo un erro al registrar la clase: </p>'.$conn->error.'
+                </div> 
+                </div>
+            ';
+            }
+        }
     ?>
     
     <section class='container mb-5 mt-5'>
@@ -106,12 +129,68 @@
     </table>
     </section>
 
+    <section class='mt-5 mb-5 container'>
+        <button class='w3-button w3-round mb-4 mt-4 w3-border w3-hover-purple' data-bs-toggle='modal' data-bs-target='#addmg1'>Agregar Clases</button>
+        
+        <?php
+            $lg='SELECT * FROM MateriasGrupo';
+            $conlg=$conn->query($lg);
+            
+            if ($conlg->num_rows >0) {
+                # code...
+                while ($filalg=$conlg->fetch_array()) {
+                    $doc2="SELECT * FROM Profesor WHERE IdProfe='".$filalg['IdProfe']."'";
+                    $gru2="SELECT * FROM Grupos WHERE IdGrupos='".$filalg['IdGrupo']."'";
+            $mat2="SELECT * FROM Materias WHERE IdMateria='".$filalg['IdMaterias']."'";
+            $codoc2=$conn->query($doc2);
+            $cogru2=$conn->query($gru2);
+            $comat2=$conn->query($mat2);
+                    # code...
+                    echo '
+                    <p>
+                        <button class="w3-block w3-button w3-border" type="button" data-bs-toggle="collapse" data-bs-target="#collapse'.$filalg['IdMateriaG'].'" aria-expanded="false" aria-controls="collapseExample">
+                            '.$filalg['MatriClas'].'
+                        </button>
+                    </p>
+                    <div class="collapse" id="collapse'.$filalg['IdMateriaG'].'">
+                        <div class="card card-body">
+                        <table class="table">
+                        <thead>
+                                <th>Id de clase</th>
+                                <th>Matricula</th>
+                                <th>Nombre de profesor</th>
+                                <th>Grupo</th>
+                                <th>Pediodo de grupo</th>
+                                <th>Materia</th>
+                        </thead>
+                        <tbody>
+                        <td>'.$filalg["IdMateriaG"].'</td>
+                        <td>'.$filalg["MatriClas"].'</td>
+                        ';
+                        while (($filadoc2=$codoc2->fetch_array())&&($filagru2=$cogru2->fetch_array())&&($filamat2=$comat2->fetch_array())) {
+                            # code...
+                            echo '
+                            <td>'.$filadoc2["NombreP"].'</td>
+                            <td>'.$filagru2["NombreGru"].'</td>
+                            <td>'.$filagru2["PeriodoGrup"].'</td>
+                            <td>'.$filamat2["Nombre"].'</td>
+                            ';
+                        }
+                        echo '</tbody></table></div>
+                        </div>
+                        ';
+
+                        
+            
+                    }
+            }
+        ?>
+
     
 
+    </section>
 
-<div class="card card-body">
-                    Prueba de que si sirven los collapse
-                </div>
+
 <!-- Modal  que inserta materias-->
 <div class="modal fade" id="addmateria" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
@@ -181,7 +260,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="w3-button w3-border w3-round" data-bs-dismiss="modal">Cancelar</button>
-        <input type="submit" name='edicion' class="w3-button w3-blue w3-round" value='Añadir materia'>
+        <input type="submit" name='edicion' class="w3-button w3-blue w3-round" value='Añadir clase'>
         </form>
       </div>
     </div>
@@ -212,6 +291,71 @@
     }
 </script>
 
+
+
+<!-- Modal  que inserta materias y grupos-->
+<div class="modal fade" id="addmg1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Enlazar Docente</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+          <?php
+            $doc='SELECT * FROM Profesor';
+            $gru='SELECT * FROM Grupos';
+            $mat='SELECT * FROM Materias';
+            $codoc=$conn->query($doc);
+            $cogru=$conn->query($gru);
+            $comat=$conn->query($mat);
+          ?>
+        <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method='POST'>
+            <Label>Matricula de la clase:</Label>
+            <input type="text" name='idmg' class='w3-input w3-border mb-2 mt-2' placeholder="Matricula">
+            <label for="">Seleciona al Materia:</label>
+            <select class='w3-select mt-2 mb-2' name="materiap" >
+            <?php
+                while ($filamat=$comat->fetch_array()) {
+                    # code...
+                ?>
+                        <option  value="<?php echo $filamat['IdMateria'] ;?>"><?php echo $filamat['Nombre'] ;?></option>
+                <?php    
+                }
+            ?>
+            </select>
+            <label for="">Seleciona Docente:</label>
+            <select class='w3-select mt-2 mb-2' name="docente" >
+            <?php
+                while ($filadoc=$codoc->fetch_array()) {
+                    # code...
+                ?>
+                        <option  value="<?php echo $filadoc['IdProfe'] ;?>"><?php echo $filadoc['NombreP'] ;?></option>
+                <?php    
+                }
+            ?>
+            </select>
+
+            <label for="">Seleciona Grupo:</label>
+            <select class='w3-select mt-2 mb-2' name="grupo1" >
+            <?php
+                while ($filagru=$cogru->fetch_array()) {
+                    # code...
+                ?>
+                        <option  value="<?php echo $filagru['IdGrupos'] ;?>"><?php echo $filagru['NombreGru'].' '.$filagru['PeriodoGrup'] ;?></option>
+                <?php    
+                }
+            ?>
+            </select>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="w3-button w3-border w3-round" data-bs-dismiss="modal">Cancelar</button>
+        <input type="submit" name='addclase' class="w3-button w3-blue w3-round" value='Añadir materia'>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
 
 <?php
     include 'pie.php';

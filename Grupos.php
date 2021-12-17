@@ -14,8 +14,6 @@
         if (!$resultadp) {
             # code...
             echo 'error al Registrarse';
-        }else{
-            echo 'Alumno registrado exitosamente';
         }
     }
 
@@ -73,7 +71,7 @@
                     while ($filal=$re->fetch_array()) {
                         echo '
                         <tr>
-                        <td>'.$filal["IdGrupos"].'</td>
+                        <td >'.$filal["IdGrupos"].'</td>
                         <td>'.$filal["NombreGru"].'</td>
                         <td>'.$filal["PeriodoGrup"].'</td>
                         <td><button class="editbtn w3-blue w3-button w3-round" data-bs-toggle="modal" data-bs-target="#ModalEditar" title="Editar Elemento"><i class="far fa-edit"></i></button></td>
