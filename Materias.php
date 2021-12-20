@@ -162,6 +162,7 @@
                                 <th>Grupo</th>
                                 <th>Pediodo de grupo</th>
                                 <th>Materia</th>
+                                <th>Acciones</th>
                         </thead>
                         <tbody>
                         <td>'.$filalg["IdMateriaG"].'</td>
@@ -174,9 +175,16 @@
                             <td>'.$filagru2["NombreGru"].'</td>
                             <td>'.$filagru2["PeriodoGrup"].'</td>
                             <td>'.$filamat2["Nombre"].'</td>
+                            
+
                             ';
                         }
-                        echo '</tbody></table></div>
+                        echo '
+                        <td><button class="editmg w3-blue w3-button w3-round" data-bs-toggle="modal" data-bs-target="#editarmb" title="Editar Elemento"><i class="far fa-edit"></i></button></td>
+                            <td><button onclick="preguntar('.$fila['IdMateria'].')" class="w3-red w3-button w3-round" title="Borrar Elemento"><i class="far fa-trash-alt"></i></button></td>
+                        </tbody>
+                        </table>
+                        </div>
                         </div>
                         ';
 
@@ -189,6 +197,84 @@
     
 
     </section>
+
+    <!-- Modal  que edita clases-->
+<div class="modal fade" id="editarmb" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modificar Materia</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+      <?php
+            $doc='SELECT * FROM Profesor';
+            $gru='SELECT * FROM Grupos';
+            $mat='SELECT * FROM Materias';
+            $codoc=$conn->query($doc);
+            $cogru=$conn->query($gru);
+            $comat=$conn->query($mat);
+          ?>
+        <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method='POST'>
+            <Label>Matricula de la clase:</Label>
+            <input type="text" name='idmg' class='w3-input w3-border mb-2 mt-2' placeholder="Matricula">
+            <label for="">Seleciona al Materia:</label>
+            <select class='w3-select mt-2 mb-2' name="materiap" >
+            <?php
+                while ($filamat=$comat->fetch_array()) {
+                    # code...
+                ?>
+                        <option  value="<?php echo $filamat['IdMateria'] ;?>"><?php echo $filamat['Nombre'] ;?></option>
+                <?php    
+                }
+            ?>
+            </select>
+            <label for="">Seleciona Docente:</label>
+            <select class='w3-select mt-2 mb-2' name="docente" >
+            <?php
+                while ($filadoc=$codoc->fetch_array()) {
+                    # code...
+                ?>
+                        <option  value="<?php echo $filadoc['IdProfe'] ;?>"><?php echo $filadoc['NombreP'] ;?></option>
+                <?php    
+                }
+            ?>
+            </select>
+
+            <label for="">Seleciona Grupo:</label>
+            <select class='w3-select mt-2 mb-2' name="grupo1" >
+            <?php
+                while ($filagru=$cogru->fetch_array()) {
+                    # code...
+                ?>
+                        <option  value="<?php echo $filagru['IdGrupos'] ;?>"><?php echo $filagru['NombreGru'].' '.$filagru['PeriodoGrup'] ;?></option>
+                <?php    
+                }
+            ?>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="w3-button w3-border w3-round" data-bs-dismiss="modal">Cancelar</button>
+        <input type="submit" name='edicion' class="w3-button w3-blue w3-round" value='Añadir clase'>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--script para el modal editar clases-->
+<script>
+    $('.editmg').on('click',function(){
+        $tr=$(this).closest('tr');
+        var datos=$tr.children("td").map(function(){
+            return $(this).text();
+        });
+
+        $('#update_id').val(datos[0]);
+        $('#nombre').val(datos[1]);
+        $('#clave').val(datos[2]);
+        $('#grado').val(datos[3]);
+    })
+</script>
 
 
 <!-- Modal  que inserta materias-->
