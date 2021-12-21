@@ -54,6 +54,13 @@
             header('location:Materias.php');
         }
 
+        if (isset($_GET['del1'])) {
+            $idb1=$_GET['del1'];
+            $borrar1="DELETE FROM MateriasGrupo where IdMateriaG='$idb1'";
+            $eliminar1=$conn->query($borrar1);
+            header('location:Materias.php');
+        }
+
         //Seccion  para administrar las clases
 
         if (isset($_POST['addclase'])) {
@@ -180,8 +187,8 @@
                             ';
                         }
                         echo '
-                        <td><button class="editmg w3-blue w3-button w3-round" data-bs-toggle="modal" data-bs-target="#editarmb" title="Editar Elemento"><i class="far fa-edit"></i></button></td>
-                            <td><button onclick="preguntar('.$fila['IdMateria'].')" class="w3-red w3-button w3-round" title="Borrar Elemento"><i class="far fa-trash-alt"></i></button></td>
+                       <!-- <td><button class="editmag w3-blue w3-button w3-round" data-bs-toggle="modal" data-bs-target="#editarmb" title="Editar Elemento"><i class="far fa-edit"></i></button></td>
+                        -->    <td><button onclick="preguntar('.$filalg['IdMateriaG'].')" class="w3-red w3-button w3-round" title="Borrar Elemento"><i class="far fa-trash-alt"></i></button></td>
                         </tbody>
                         </table>
                         </div>
@@ -198,7 +205,7 @@
 
     </section>
 
-    <!-- Modal  que edita clases-->
+    <!-- Modal  que edita clases temporalmente sin funcionar-->
 <div class="modal fade" id="editarmb" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
@@ -216,10 +223,11 @@
             $comat=$conn->query($mat);
           ?>
         <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method='POST'>
+            <input type="hidden" id='update-idclas'>
             <Label>Matricula de la clase:</Label>
-            <input type="text" name='idmg' class='w3-input w3-border mb-2 mt-2' placeholder="Matricula">
+            <input type="text" id='matriclas' name='idmg' class='w3-input w3-border mb-2 mt-2' placeholder="Matricula">
             <label for="">Seleciona al Materia:</label>
-            <select class='w3-select mt-2 mb-2' name="materiap" >
+            <select class='w3-select mt-2 mb-2' id='mateclas' name="materiap" >
             <?php
                 while ($filamat=$comat->fetch_array()) {
                     # code...
@@ -230,7 +238,7 @@
             ?>
             </select>
             <label for="">Seleciona Docente:</label>
-            <select class='w3-select mt-2 mb-2' name="docente" >
+            <select class='w3-select mt-2 mb-2' id='doceclass' name="docente" >
             <?php
                 while ($filadoc=$codoc->fetch_array()) {
                     # code...
@@ -242,7 +250,7 @@
             </select>
 
             <label for="">Seleciona Grupo:</label>
-            <select class='w3-select mt-2 mb-2' name="grupo1" >
+            <select class='w3-select mt-2 mb-2' id='grupclass' name="grupo1" >
             <?php
                 while ($filagru=$cogru->fetch_array()) {
                     # code...
@@ -261,18 +269,20 @@
   </div>
 </div>
 
-<!--script para el modal editar clases-->
+<!--script para el modal editar clases temporalmente sin funcionar-->
 <script>
-    $('.editmg').on('click',function(){
+    $('.editmag').on('click',function(){
         $tr=$(this).closest('tr');
         var datos=$tr.children("td").map(function(){
             return $(this).text();
         });
 
-        $('#update_id').val(datos[0]);
-        $('#nombre').val(datos[1]);
-        $('#clave').val(datos[2]);
-        $('#grado').val(datos[3]);
+        $('#update-idclas').val(datos[0]);
+        $('#matriclas').val(datos[1]);
+        $('#doceclass').val(datos[2]);
+        $('#grupclass').val(datos[3]);
+        $('#mateclass').val(datos[4]);
+        
     })
 </script>
 
@@ -346,7 +356,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="w3-button w3-border w3-round" data-bs-dismiss="modal">Cancelar</button>
-        <input type="submit" name='edicion' class="w3-button w3-blue w3-round" value='Añadir clase'>
+        <input type="submit" name='edicion' class="w3-button w3-blue w3-round" value='Añadir Materia'>
         </form>
       </div>
     </div>
@@ -442,6 +452,15 @@
     </div>
   </div>
 </div>
+
+<!--script para confirmar el borrado de clases y posteriormente borrarla-->
+<script>
+    function preguntar(IdMateriaG){
+        if(confirm('¿Estas seguro que quieres Eliminar este alumno?.')){
+            window.location.href='Materias.php?del1='+IdMateriaG;
+        }
+    }
+</script>
 
 <?php
     include 'pie.php';

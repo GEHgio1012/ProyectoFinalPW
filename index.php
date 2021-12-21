@@ -5,7 +5,104 @@
 ?>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <section class='container p-4 mb-5 mt-5'>
-        <canvas id='myChart' ></canvas>
+        <div class='row align-items-center gx-5'>
+
+            <div class='col'>
+                <table class='table'>
+                    <thead>
+                        <th>Numero de Alumnos registrados</th>
+                    </thead>
+                    <tbody>
+
+                <?php
+                    $al1='SELECT * FROM Alumnos';
+                    $conla=$conn->query($al1);
+                        # code...
+                        echo '<th>'.$conla->num_rows.' Alumnos registrados actualemente</th>';
+                    
+                ?>
+                    
+
+                    </tbody> 
+                </table>
+                <a href="AlumnosPdf.php"><button class='w3-button  w3-round w3-border w3-hover-purple'><i class="fas fa-file-pdf"></i> Imprimir listado de alumnos detallado</button></a>
+                <table class='mt-5 table'>
+                    <thead>
+                        <th>Grupos</th>
+                        <th>Periodos</th>
+                    </thead>
+                    <tbody>
+                        <?php
+                            $grupos01='SELECT * FROM Grupos';
+                            $congu1=$conn->query($grupos01);
+                            while ($filas0101=$congu1->fetch_array()) {
+                                # code...
+                                echo '<tr>
+                                <td>'.$filas0101["NombreGru"].'</td>
+                                <td>'.$filas0101["PeriodoGrup"].'</td>
+                                </tr>';
+                            }
+                        ?>
+                    </tbody>
+                </table>
+            </div>
+ 
+            <div class='col justify-content-center' align='center' >
+                <canvas id='myChart' ></canvas><br>
+                
+            </div>
+
+        </div>
+    </section>
+
+    <section class='container mt-5 mb-5'>
+        <div class='row gx-5 '>
+            
+            <div class='col'>
+                <table class="table">
+                    <thead>
+                        <th>Materias Disponibles</th>
+                    </thead>
+                    <tbody>
+                        <?php
+                            $csMat="SELECT * FROM Materias";
+                            $conma1=$conn->query($csMat);
+                            while ($filama1=$conma1->fetch_array()) {
+                                # code...
+                                echo '
+                                <tr>
+                                    <td>'.$filama1['Nombre'].'</td>
+                                </tr>
+                                ';
+                            }
+                        ?>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class='col'>
+                <table class="table">
+                    <thead>
+                        <th>Docentes</th>
+                    </thead>
+                    <tbody>
+                    <?php
+                            $csDoc1="SELECT * FROM Profesor";
+                            $coDoc1=$conn->query($csDoc1);
+                            while ($filaD1=$coDoc1->fetch_array()) {
+                                # code...
+                                echo '
+                                <tr>
+                                    <td>'.$filaD1['NombreP'].'</td>
+                                </tr>
+                                ';
+                            }
+                        ?>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
     </section>
    
     
@@ -30,7 +127,7 @@ const myChart = new Chart(ctx, {
                 
         ],
         datasets: [{
-            label: 'Catitidad de Alumnos por grupo',
+            label: 'Cantidad de Alumnos por grupo',
             data:[
             <?php
                     $grg='SELECT * FROM Grupos';
@@ -94,3 +191,12 @@ const myChart = new Chart(ctx, {
 <?php
     include 'pie.php';
 ?>
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&family=Rajdhani:wght@300;400;500&display=swap');
+    *{
+        font-family: 'Montserrat', sans-serif;
+
+font-family: 'Rajdhani', sans-serif;
+    }
+</style>

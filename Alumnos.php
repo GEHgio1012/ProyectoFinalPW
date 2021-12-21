@@ -67,7 +67,7 @@
     <table class='table mb-5 mt-5'>
         
         <thead>
-            <th>TODOS LOS ALUMNOS</th>
+            <th colspan="3">TODOS LOS ALUMNOS</th>
                <td colspan="6" class='d-flex justify-content-start'> <button class='w3-green w3-button w3-round' title="Agregar Alumno" onclick='document.getElementById("modalAlta").style.display="block"'><i class="fas fa-plus"></i></button></td>
                
         </thead>
@@ -79,7 +79,7 @@
                 if ($re->num_rows >0){
                     ?>
                     <tr>
-                        <th>Id</th>
+                        <td style="visibility: hidden;"></td>
                         <th>Matricula</th>
                         <th>Nombre</th>
                         <th>Fecha de Nacimiento</th>
@@ -95,7 +95,7 @@
                     while ($filal=$re->fetch_array()) {
                         echo '
                         <tr>
-                        <td>'.$filal["IdAlumnos"].'</td>
+                        <td style="visibility:collapse;">'.$filal["IdAlumnos"].'</td>
                         <td>'.$filal["Matricula"].'</td>
                         <td>'.$filal["NombreAl"].'</td>
                         <td>'.$filal["FechaNac"].'</td>   
