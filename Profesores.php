@@ -36,6 +36,70 @@
 
 <section class='container mb-5 mt-5'>
     <h2>Lista de profesores</h2>
+
+    <div class="container">
+    <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="POST">
+        
+        <div class="row w3-right">
+            <div class="col-8">
+            <input class="w3-input" type="text" name="matrib" id="matrib" placeholder="Buscar por id Clave" required> 
+            </div>
+            <div class="col">
+            <input class="w3-button w3-round w3-blue" type="submit" value="Buscar" name="enviarBus">
+            </div>
+        </div>
+        
+       
+        
+        </form>
+    </div>
+        <section class='mb-5 mt-5'>
+            <?php
+                if (isset($_POST['enviarBus'])) {
+                    $busqueda =$_POST['matrib'];
+                    $bus="SELECT * FROM Profesor WHERE IdProfe='$busqueda'";
+                    $resultb=$conn->query($bus);
+                    if ($resultb->num_rows >0) {
+                        echo '
+                    <h2>Registros encontrados</h2>
+                    <table class="table">
+                    <thead>
+                    <th>Id</th>
+                        <th>Profesor</th>
+                        <th>Correo</th>
+                        <th>Genero</th>
+                    </thead>
+                    <tbody>
+                    ';
+                    while ($filarb=$resultb->fetch_array()) {
+                        # code...
+                        echo '
+                        <tr>
+                        <td>'.$filarb["IdProfe"].'</td>
+                        <td>'.$filarb["NombreP"].'</td>
+                        <td>'.$filarb["CorreoP"].'</td>
+                        <td>'.$filarb["Genero"].'</td>
+                        </tr>
+                        ';
+                        
+                    }
+
+                    echo '
+                        </tbody>
+                    </table>
+                    ';
+
+                    }else{
+                        echo '<br>
+                        <div class="alert alert-danger" role="alert">
+                        <strong>ERROR DE BUSQUEDA!</strong> No se encontro ningun Docente con la clave '.$busqueda.'.
+                        </div>
+                        ';
+                    }
+                }
+            ?>
+             </section>
+
     <table class='table'>
         <thead>
             <tr>

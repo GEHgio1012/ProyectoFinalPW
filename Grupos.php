@@ -50,6 +50,67 @@
         $congrupos=$conn->query($grupos);
     ?>
 
+<div class="container">
+    <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="POST">
+        
+        <div class="row w3-right">
+            <div class="col-8">
+            <input class="w3-input" type="text" name="matrib" id="matrib" placeholder="Buscar por Nombre" required> 
+            </div>
+            <div class="col">
+            <input class="w3-button w3-round w3-blue" type="submit" value="Buscar" name="enviarBus">
+            </div>
+        </div>
+        
+       
+        
+        </form>
+    </div>
+        <section class='mb-5 mt-5'>
+            <?php
+                if (isset($_POST['enviarBus'])) {
+                    $busqueda =$_POST['matrib'];
+                    $bus="SELECT * FROM Grupos WHERE NombreGru='$busqueda'";
+                    $resultb=$conn->query($bus);
+                    if ($resultb->num_rows >0) {
+                        echo '
+                    <h2>Registros encontrados</h2>
+                    <table class="table">
+                    <thead>
+                    <th>id de grupo</th>
+                    <th>Nombre del Grupo</th>
+                    <th>Periodo del Grupo</th>
+                    </thead>
+                    <tbody>
+                    ';
+                    while ($filarb=$resultb->fetch_array()) {
+                        # code...
+                        echo '
+                        <tr>
+                        <td >'.$filarb["IdGrupos"].'</td>
+                        <td>'.$filarb["NombreGru"].'</td>
+                        <td>'.$filarb["PeriodoGrup"].'</td>
+                        </tr>
+                        ';
+                        
+                    }
+
+                    echo '
+                        </tbody>
+                    </table>
+                    ';
+
+                    }else{
+                        echo '<br>
+                        <div class="alert alert-danger" role="alert">
+                        <strong>ERROR DE BUSQUEDA!</strong> No se encontro ningun Grupo con el nombre '.$busqueda.'.
+                        </div>
+                        ';
+                    }
+                }
+            ?>
+             </section>
+
     <table class='table'>
         <thead>
             <th>Todos Los Grupos</th>

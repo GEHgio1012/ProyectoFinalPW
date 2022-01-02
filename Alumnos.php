@@ -56,6 +56,8 @@
         }else{
         }
     }
+
+    
 ?>
 
 <section class='container mb-5 mt-5'>
@@ -64,6 +66,81 @@
         $coman='SELECT * FROM Alumnos';
         $datos=$conn->query($coman);
     ?>
+
+    <div class="container">
+    <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="POST">
+        
+        <div class="row w3-right">
+            <div class="col-8">
+            <input class="w3-input" type="text" name="matrib" id="matrib" placeholder="Buscar por Matricula" required> 
+            </div>
+            <div class="col">
+            <input class="w3-button w3-round w3-blue" type="submit" value="Buscar" name="enviarBus">
+            </div>
+        </div>
+        
+       
+        
+        </form>
+    </div>
+        <section class='mb-5 mt-5'>
+            <?php
+                if (isset($_POST['enviarBus'])) {
+                    $busqueda =$_POST['matrib'];
+                    $bus="SELECT * FROM Alumnos WHERE Matricula='$busqueda'";
+                    $resultb=$conn->query($bus);
+                    if ($resultb->num_rows >0) {
+                        echo '
+                    <h2>Registros encontrados</h2>
+                    <table class="table">
+                    <thead>
+                    <th>Matricula</th>
+                            <th>Nombre</th>
+                            <th>Fecha de Nacimiento</th>
+                            <th>Ciudad</th>
+                            <th>Genero</th>
+                            <th>Correo</th>
+                            <th>Grado</th>
+                            <th>Id de Grado</th>
+                    </thead>
+                    <tbody>
+                    ';
+                    while ($filarb=$resultb->fetch_array()) {
+                        # code...
+                        echo '
+                        <tr>
+                        <td>'.$filarb["Matricula"].'</td>
+                        <td>'.$filarb["NombreAl"].'</td>
+                        <td>'.$filarb["FechaNac"].'</td>   
+                        <td>'.$filarb["Ciudad"].'</td>
+                        <td>'.$filarb["Genero"].'</td>
+                        <td>'.$filarb["Correo"].'</td>
+                        <td>'.$filarb["Grado"].'</td>
+                        <td>'.$filarb["IdGrupo"].'</td>
+                        </tr>
+                        ';
+                        
+                    }
+
+                    echo '
+                        </tbody>
+                    </table>
+                    ';
+
+                    }else{
+                        echo '<br>
+                        <div class="alert alert-danger" role="alert">
+                        <strong>ERROR DE BUSQUEDA!</strong> No se encontro ningun Alumno con la matricua '.$busqueda.'.
+                        </div>
+                        ';
+                    }
+                }
+            ?>
+           
+                    
+                
+        </section>
+    
     <table class='table mb-5 mt-5'>
         
         <thead>
