@@ -30,6 +30,7 @@
                     <thead>
                         <th>Grupos</th>
                         <th>Periodos</th>
+                        <th colspan='2'>Acciones</th>
                     </thead>
                     <tbody>
                         <?php
@@ -40,9 +41,11 @@
                                 echo '<tr>
                                 <td>'.$filas0101["NombreGru"].'</td>
                                 <td>'.$filas0101["PeriodoGrup"].'</td>
+                                <td colspan="2"><a href="imprimirmaterias.php?materias='.$filas0101["IdGrupos"].'"> <button class="w3-button w3-border w3-round">Imprimir materias de este grupo</button></a></td>
                                 </tr>';
                             }
                         ?>
+                       
                     </tbody>
                 </table>
             </div>
