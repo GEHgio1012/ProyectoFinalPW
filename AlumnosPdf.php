@@ -1,4 +1,5 @@
 <?php
+
     require ('fpdf/fpdf.php');
     class PDF extends FPDF
 {
@@ -28,21 +29,34 @@ function Footer()
     $this->Cell(0,10,'Page '.$this->PageNo().'/{nb}',0,0,'C');
 }
 }
-require('conexion.php');
-$csAlumnos="SELECT * FROM Alumnos ORDER BY NombreAl AND Grado";
-$conexA=$conn->query($csAlumnos);
-// Creación del objeto de la clase heredada
 $pdf = new PDF();
+require('conexion.php');
+$grupo1="SELECT * FROM Grupos";
+$congru=$conn->query($grupo1);
+while ($filagru=$congru->fetch_array()) {
+
+
 $pdf->AliasNbPages();
 $pdf->AddPage();
 $pdf->SetFont('Arial','',9);
 $pdf->SetFillColor(2,157,116);//Fondo verde de celda
 $pdf->SetTextColor(240, 255, 240); //Letra color blanco
+
+$pdf->Cell(10);
+    $pdf->Cell(155,10,'Grupo: '.$filagru['NombreGru'],1,1,'C',true);
+
 $pdf->Cell(10);
 $pdf->Cell(15,10,'Matricula',1,0,'C',true);
 $pdf->Cell(60,10,'nombre de Alumnos',1,0,'C',true);
 $pdf->Cell(40,10,'Grupo',1,0,'C',true);
 $pdf->Cell(40,10,'Periodo',1,1,'C',true);
+
+    # code..
+    
+    $csAlumnos="SELECT * FROM Alumnos WHERE IdGrupo='".$filagru['IdGrupos']."' ORDER BY NombreAl";
+$conexA=$conn->query($csAlumnos);
+// Creación del objeto de la clase heredada
+
 $pdf->SetFillColor(229, 229, 229); //Gris tenue de cada fila
     $pdf->SetTextColor(3, 3, 3); //Color del texto: Negro
     $bandera = false; //Para alternar el relleno
@@ -63,6 +77,10 @@ while ($filap=$conexA->fetch_array()) {
     //}
     
     $bandera = !$bandera;//Alterna el valor de la bandera
+    
+}
+
 }
 $pdf->Output();
+
 ?>
