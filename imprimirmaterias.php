@@ -65,8 +65,8 @@ while ($filap=$conexM->fetch_array()) {
     while (($filamat=$conmt->fetch_array())&&($filadocen=$condt->fetch_array())&&($filag1=$connG->fetch_array())) {
         # code...
         $pdf->Cell(7);
-        $pdf->Cell(40,10,utf8_decode($filamat['Nombre']),1,0,'C',$bandera);
-        $pdf->Cell(60,10,utf8_decode($filadocen['NombreP']),1,0,'C',$bandera);
+        $pdf->Cell(50,10,utf8_decode($filamat['Nombre']),1,0,'C',$bandera);
+        $pdf->Cell(50,10,utf8_decode($filadocen['NombreP']),1,0,'C',$bandera);
         $pdf->Cell(40,10,utf8_decode($filag1['NombreGru']),1,0,'C',$bandera);
        $pdf->Cell(40,10,utf8_decode($filag1['PeriodoGrup']),1,1,'C',$bandera);
     //}

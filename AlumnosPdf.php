@@ -29,7 +29,7 @@ function Footer()
 }
 }
 require('conexion.php');
-$csAlumnos="SELECT * FROM Alumnos ORDER BY NombreAl";
+$csAlumnos="SELECT * FROM Alumnos ORDER BY NombreAl AND Grado";
 $conexA=$conn->query($csAlumnos);
 // Creación del objeto de la clase heredada
 $pdf = new PDF();
